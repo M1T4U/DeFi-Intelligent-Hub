@@ -1,0 +1,5 @@
+{
+  "name": "DeFi Intelligence Hub",
+  "description": "An AI-powered portfolio analytics platform to help users optimize their DeFi investments. This version provides a simplified dashboard with mock data and AI-generated insights using Gemini.",
+  "requestFramePermissions": []
+}

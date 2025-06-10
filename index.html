@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeFi Intelligence Hub</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMxMjEyMTIiLz4KPHJlY3QgeD0iMTYiIHk9IjEyIiB3aWR0aD0iMzIiIGhlaWdodD0iMjAiIHJ4PSI0IiBmaWxsPSIjRjBCOTBCIi8+CjxjaXJjbGUgY3g9IjI2IiBjeT0iMjIiIHI9IjQiIGZpbGw9IiMxRTEFMUUiLz4KPGNpcmNsZSBjeD0iMzgiIGN5PSIyMiIgcj0iNCIgZmlsbD0iIzFFMUUxRSIvPgo8cmVjdCB4PSIyOCIgeT0iMzIiIHdpZHRoPSI4IiBoZWlnaHQ9IjEwIiBmaWxsPSIjRjBCOTBCIi8+CjxwYXRoIGQ9Ik0yMiAzNkMyMiAzNC44OTU0IDIyLjg5NTQgMzQgMjQgMzRIMTRDNDEuMTA0NiAzNCA0MiAzNC44OTU0IDQyIDM2VjQwSDIyVjM2WiIgZmlsbD0iIzRDNEM0QyIvPgo8cmVjdCB4PSIxMiIgeT0iNDQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0iIzAwMDAwMCIvPgo8cmVjdCB4PSIxOCIgeT0iNDYiIHdpZHRoPSIyOCIgaGVpZ2h0PSI0IiByeD0iMSIgZmlsbD0iI0YwQjkwQiIvPgo8L3N2Zz4K" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Define SVGs for background
+    const coinSvgDark = `<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><circle cx='32' cy='32' r='20' fill='rgba(240,185,11,0.04)' stroke='rgba(240,185,11,0.08)' stroke-width='1'/></svg>`;
+    const tokenSvgDark = `<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><path d='M32 5 L58 20 L58 50 L32 65 L6 50 L6 20 Z' fill='rgba(240,185,11,0.04)' stroke='rgba(240,185,11,0.08)' stroke-width='1'/></svg>`;
+    const nftSvgDark = `<svg viewBox='0 0 48 64' xmlns='http://www.w3.org/2000/svg'><rect x='4' y='4' width='40' height='56' rx='6' fill='rgba(240,185,11,0.04)' stroke='rgba(240,185,11,0.08)' stroke-width='1'/></svg>`;
+
+    const coinSvgLight = `<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><circle cx='32' cy='32' r='20' fill='rgba(220,160,0,0.05)' stroke='rgba(220,160,0,0.09)' stroke-width='1'/></svg>`;
+    const tokenSvgLight = `<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><path d='M32 5 L58 20 L58 50 L32 65 L6 50 L6 20 Z' fill='rgba(220,160,0,0.05)' stroke='rgba(220,160,0,0.09)' stroke-width='1'/></svg>`;
+    const nftSvgLight = `<svg viewBox='0 0 48 64' xmlns='http://www.w3.org/2000/svg'><rect x='4' y='4' width='40' height='56' rx='6' fill='rgba(220,160,0,0.05)' stroke='rgba(220,160,0,0.09)' stroke-width='1'/></svg>`;
+
+    const encodeSVG = (svgString) => `url("data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svgString)}")`;
+
+    tailwind.config = {
+      darkMode: 'class', // Enable class-based dark mode
+      theme: {
+        extend: {
+          colors: {
+            // Binance Dark Theme
+            'primary-dark': '#121212', // Near Black
+            'secondary-dark': '#1E1E1E', // Very Dark Gray
+            'accent-dark': '#F0B90B', // Binance Yellow
+            'text-dark': '#EAEAEA', // Light Gray / Off-white
+            'text-muted-dark': '#707070', // Medium Gray
+
+            // Binance Light Theme (Complementary)
+            'primary-light': '#F5F5F5', // Very Light Gray
+            'secondary-light': '#FFFFFF', // White
+            'accent-light': '#F0B90B', // Binance Yellow
+            'text-light': '#1E1E1E', // Dark Gray for text on light
+            'text-muted-light': '#707070', // Medium Gray
+
+            'gain': '#10B981', // Emerald 500 (Standard)
+            'loss': '#EF4444', // Red 500 (Standard)
+            'digital-blue-green': '#00F0B0', // Stunning digital blue/green for text
+            'tech-blue': '#00AEEF', // A vibrant blue for gradients
+            'tech-red': '#ED1C24',   // A techy red for gradients
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            digital: ['Consolas', 'Courier New', 'monospace'],
+          },
+          backgroundImage: (theme) => ({
+            'digital-artifacts-dark': `
+              ${encodeSVG(nftSvgDark)} 50px 50px / 180px 180px repeat,
+              ${encodeSVG(tokenSvgDark)} 120px 120px / 220px 220px repeat,
+              ${encodeSVG(coinSvgDark)} 0px 0px / 150px 150px repeat,
+              theme('colors.primary-dark')
+            `,
+            'digital-artifacts-light': `
+              ${encodeSVG(nftSvgLight)} 50px 50px / 180px 180px repeat,
+              ${encodeSVG(tokenSvgLight)} 120px 120px / 220px 220px repeat,
+              ${encodeSVG(coinSvgLight)} 0px 0px / 150px 150px repeat,
+              theme('colors.primary-light')
+            `,
+            'text-gradient-blue-red': `linear-gradient(to right, ${theme('colors.tech-blue')}, ${theme('colors.tech-red')})`,
+          }),
+          textShadow: {
+            'digital-glow-dark': '0 0 5px rgba(240, 185, 11, 0.7), 0 0 10px rgba(240, 185, 11, 0.5)',
+            'digital-glow-light': '0 0 5px rgba(218, 165, 32, 0.6), 0 0 10px rgba(218, 165, 32, 0.4)',
+            'digital-glow-yellow-intense': '0 0 3px rgba(240, 185, 11, 0.8), 0 0 8px rgba(240, 185, 11, 0.6), 0 0 15px rgba(240, 185, 11, 0.4)',
+            'digital-glow-blue-green-intense': '0 0 3px rgba(0, 240, 176, 0.8), 0 0 8px rgba(0, 240, 176, 0.6), 0 0 15px rgba(0, 240, 176, 0.4)',
+          },
+          animation: {
+            'digital-drift': 'digital-drift 90s linear infinite',
+            'float-orbit-1': 'float-orbit 15s ease-in-out infinite',
+            'float-orbit-2': 'float-orbit 20s ease-in-out infinite reverse',
+            'float-orbit-3': 'float-orbit 18s ease-in-out infinite',
+            'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
+            'subtle-rotate': 'subtle-rotate 25s linear infinite',
+          },
+          keyframes: {
+            'digital-drift': {
+              '0%': { backgroundPosition: '0px 0px, 0px 0px, 0px 0px' },
+              '100%': { backgroundPosition: '-360px 360px, -440px -440px, 300px -300px' },
+            },
+            'float-orbit': {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px) rotate(0deg)' },
+              '25%': { transform: 'translateY(-15px) translateX(10px) rotate(5deg)' },
+              '50%': { transform: 'translateY(0px) translateX(-15px) rotate(-5deg)' },
+              '75%': { transform: 'translateY(15px) translateX(5px) rotate(10deg)' },
+            },
+            'pulse-glow': {
+              '0%': { opacity: '0.7', transform: 'scale(1)' },
+              '50%': { opacity: '1', transform: 'scale(1.05)' },
+              '100%': { opacity: '0.7', transform: 'scale(1)' },
+            },
+            'subtle-rotate': {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-digital {
+      font-family: theme('fontFamily.digital');
+    }
+    .text-shadow-digital-glow-dark {
+      text-shadow: theme('textShadow.digital-glow-dark');
+    }
+    .text-shadow-digital-glow-light {
+      text-shadow: theme('textShadow.digital-glow-light');
+    }
+    .text-shadow-digital-glow-yellow-intense {
+      text-shadow: theme('textShadow.digital-glow-yellow-intense');
+    }
+    .text-shadow-digital-glow-blue-green-intense {
+      text-shadow: theme('textShadow.digital-glow-blue-green-intense');
+    }
+    /* Fix for Recharts Tooltip in dark mode */
+    .recharts-default-tooltip {
+      background-color: var(--tooltip-bg, #fff) !important;
+      border: 1px solid var(--tooltip-border, #ccc) !important;
+      border-radius: 0.5rem; 
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+    .recharts-tooltip-label, .recharts-tooltip-item {
+      color: var(--tooltip-text, #333) !important;
+    }
+    .recharts-legend-item-text {
+        color: var(--legend-text-color, #333) !important;
+    }
+    .text-gradient-blue-red {
+      background-image: theme('backgroundImage.text-gradient-blue-red');
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.4.0",
+    "recharts": "https://esm.sh/recharts@^2.15.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="text-text-light dark:text-text-dark transition-colors duration-300">
+  <div id="root"></div>
+  <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
